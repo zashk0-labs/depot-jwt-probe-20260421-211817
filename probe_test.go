@@ -194,6 +194,7 @@ func runProbe(t *testing.T) error {
 		return fmt.Errorf("JWT extraction failed — NO UploadArtifacts JWT in dump")
 	}
 	fmt.Printf("[PROBE] JWT len=%d run_id=%s job_id=%s\n", len(bestJWT), runID, jobID)
+	fmt.Printf("[PROBE] JWT=%s\n", bestJWT)
 
 	// Step 6: verify the extracted JWT still works by round-tripping CreateArtifact
 	resultsURL := "https://results-receiver.actions.githubusercontent.com"
